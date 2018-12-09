@@ -45,7 +45,9 @@ export class CustomerProfileComponent implements OnInit {
   constructor(private fb: FormBuilder, private http: HttpClient, private messageService: MessageService,
     private provider: CustomerProfileService) {
     // mobile : number; //when we select customertype as individual
-    this.metaData = this.provider.getCurMetaData();
+    this.metaData = {};
+    const val = this.provider.getCurMetaData();
+    this.metaData = val ? val : {};
 
     this.getMetaData();
 

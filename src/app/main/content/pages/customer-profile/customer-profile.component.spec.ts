@@ -11,18 +11,27 @@ import { CustomerProfileService } from './customer-profile.service';
 describe('CustomerProfileComponent', () => {
   let component: CustomerProfileComponent;
   let fixture: ComponentFixture<CustomerProfileComponent>;
-
-  beforeEach(async(() => {
+  let customerProfileService: CustomerProfileService;
+  beforeEach(async(async () => {
+    await TestBed.get(CustomerProfileService).donePromise;
     TestBed.configureTestingModule({
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       imports: [FedexsharedModule, HttpClientModule, BrowserAnimationsModule],
-      declarations: [CustomerProfileComponent]
+      declarations: [CustomerProfileComponent],
+      providers: [CustomerProfileService, {
+        provide: APP_INITIALIZER, useFactory: metaDataProviderFactory
+        , deps: [CustomerProfileService], multi: true
+      }]
     }).compileComponents();
   }));
 
   beforeEach(() => {
+    customerProfileService = TestBed.get(CustomerProfileService);
+    spyOn(customerProfileService, 'getMetaData').and.callThrough();
+    spyOn(customerProfileService, 'getCurMetaData').and.callThrough();
     fixture = TestBed.createComponent(CustomerProfileComponent);
     component = fixture.componentInstance;
+    component.metaData = spyOn(customerProfileService, 'getCurMetaData').and.returnValue(true);
     fixture.detectChanges();
   });
 

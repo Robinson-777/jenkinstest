@@ -56,7 +56,7 @@
             Primary Details
           </p-header>
           <div class="p-grid">
-            <div class="p-col" *ngIf="metaData['name_1']['isVisible']">
+            <div class="p-col" *ngIf="metaData['name_1']?.isVisible">
               <mat-form-field>
                 <input matInput placeholder="{{metaData['name_1']['fieldDescription']}}" formControlName="name"
                   [required]="metaData['name_1']['isMandatory']">
@@ -67,7 +67,7 @@
                 </span>
               </mat-error>
             </div>
-            <div class="p-col" *ngIf="metaData['city_3']['isVisible']">
+            <div class="p-col" *ngIf="metaData['city_3']?.isVisible">
               <mat-form-field>
                 <input matInput placeholder="{{metaData['city_3']['fieldDescription']}}" formControlName="city"
                   [required]="metaData['city_3']['isMandatory']">
@@ -78,7 +78,7 @@
                 </span>
               </mat-error>
             </div>
-            <div class="p-col" *ngIf="metaData['state_4']['isVisible']">
+            <div class="p-col" *ngIf="metaData['state_4']?.isVisible">
               <mat-form-field>
                 <input matInput placeholder="{{metaData['state_4']['fieldDescription']}}" formControlName="state"
                   [required]="metaData['state_4']['isMandatory']">
@@ -96,7 +96,7 @@
             </mat-form-field>
           </div> -->
           <div class="p-grid">
-            <div class="p-col" *ngIf="metaData['country_5']['isVisible']">
+            <div class="p-col" *ngIf="metaData['country_5']?.isVisible">
 
               <mat-form-field class="example-full-width">
                 <mat-select placeholder="{{metaData['country_5']['fieldDescription']}}" formControlName="country"
@@ -113,7 +113,7 @@
                 </span>
               </mat-error>
             </div>
-            <div class="p-col" *ngIf="metaData['zip_6']['isVisible']">
+            <div class="p-col" *ngIf="metaData['zip_6']?.isVisible">
               <mat-form-field class="example-full-width">
                 <input matInput placeholder="{{metaData['zip_6']['fieldDescription']}}" formControlName="zip"
                   [required]="metaData['zip_6']['isMandatory']">
@@ -124,7 +124,7 @@
                 </span>
               </mat-error>
             </div>
-            <div class="p-col" *ngIf="metaData['phone_8']['isVisible']">
+            <div class="p-col" *ngIf="metaData['phone_8']?.isVisible">
               <mat-form-field class="example-full-width">
                 <input matInput placeholder="{{metaData['phone_8']['fieldDescription']}}" formControlName="phone"
                   [required]="metaData['phone_8']['isMandatory']">
@@ -137,7 +137,7 @@
             </div>
           </div>
           <div class="p-grid">
-            <div class="p-col" *ngIf="metaData['fax_9']['isVisible']">
+            <div class="p-col" *ngIf="metaData['fax_9']?.isVisible">
               <mat-form-field>
                 <input matInput placeholder="{{metaData['fax_9']['fieldDescription']}}" formControlName="fax"
                   [required]="metaData['fax_9']['isMandatory']">
@@ -148,7 +148,7 @@
                 </span>
               </mat-error>
             </div>
-            <div class="p-col" *ngIf="metaData['email_10']['isVisible']">
+            <div class="p-col" *ngIf="metaData['email_10']?.isVisible">
               <mat-form-field>
                 <input matInput placeholder="{{metaData['email_10']['fieldDescription']}}" formControlName="email"
                   [required]="metaData['email_10']['isMandatory']">
@@ -159,7 +159,7 @@
                 </span>
               </mat-error>
             </div>
-            <div class="p-col" *ngIf="metaData['url_11']['isVisible']">
+            <div class="p-col" *ngIf="metaData['url_11']?.isVisible">
               <mat-form-field>
                 <input matInput placeholder="{{metaData['url_11']['fieldDescription']}}" formControlName="url"
                   [required]="metaData['url_11']['isMandatory']">
@@ -172,7 +172,7 @@
             </div>
           </div>
           <div class="p-grid">
-            <div class="p-col" *ngIf="metaData['address_2']['isVisible']">
+            <div class="p-col" *ngIf="metaData['address_2']?.isVisible">
               <mat-form-field>
                 <textarea matInput placeholder="{{metaData['address_2']['fieldDescription']}}" formControlName="address"
                   [required]="metaData['address_2']['isMandatory']"></textarea>
@@ -186,7 +186,7 @@
           </div>
           <hr style="border-top: dotted 1px #bbb;margin:0;margin-bottom: 10px;" />
           <div class="p-grid">
-            <div class="p-col" *ngIf="metaData['fedexAccount_12']['isVisible']">
+            <div class="p-col" *ngIf="metaData['fedexAccount_12']?.isVisible">
               <mat-form-field>
                 <input matInput placeholder="{{metaData['fedexAccount_12']['fieldDescription']}}" formControlName="fedexAccount"
                   [required]="metaData['fedexAccount_12']['isMandatory']">
@@ -197,7 +197,7 @@
                 </span>
               </mat-error>
             </div>
-            <div class="p-col" *ngIf="metaData['creditStat_13']['isVisible']">
+            <div class="p-col" *ngIf="metaData['creditStat_13']?.isVisible">
               <mat-form-field>
                 <input matInput placeholder="{{metaData['creditStat_13']['fieldDescription']}}" formControlName="creditStat"
                   [required]="metaData['creditStat_13']['isMandatory']">

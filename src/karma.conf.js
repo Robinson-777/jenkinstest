@@ -16,20 +16,6 @@ module.exports = function (config) {
     client: {
       clearContext: false // leave Jasmine Spec Runner output visible in browser
     },
-    coverageReporter: {
-      reporters: [
-        {
-          type: 'html',
-          dir: 'app/tests/coverage',
-          watermarks: {
-            statements: [50, 75],
-            lines: [50, 75],
-            functions: [50, 75],
-            branches: [50, 75]
-          }
-        }
-      ]
-    },
     coverageIstanbulReporter: {
       dir: require('path').join(__dirname, '../coverage'),
       reports: ['html', 'lcovonly'],
@@ -40,7 +26,7 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['PhantomJS'], // Chrome
-    singleRun: false
+    browsers: ['PhantomJS'], // PhantomJS Chrome
+    singleRun: true
   });
 };
