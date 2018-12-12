@@ -6,3 +6,36 @@
 
 /*Fedex Ang Theme*/
 
+.spinloader {
+  width: 160px;
+}
+.spinLoaderhide {
+  display: none;
+}
+#divspinLoader .modal-content {
+  width: auto;
+  height: auto;
+  text-align: center !important;
+  background: #fff;
+  box-shadow: none;
+  border: none;
+  padding: 10px 20px;
+}
+#divspinLoader .ui-dialog-content {
+  padding: 0px !important;
+}
+#divspinLoader .ui-dialog .ui-dialog-titlebar {
+  display: none;
+}
+#divspinLoader .ui-dialog {
+  width: auto !important;
+  min-width: 116px !important;
+  min-height: 0px !important;
+  background: transparent;
+  border-radius: 8px;
+}
+#divspinLoader .loading-Text {
+  margin: 10px 0 0 !important;
+  font-size: 14px;
+  line-height: 20px;
+}

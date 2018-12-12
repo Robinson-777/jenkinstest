@@ -64,3 +64,8 @@ body .ui-button {
 .cdk-overlay-container {
   z-index: 1002 !important;
 }
+
+p-dialog .ui-dialog {
+  overflow-y: scroll;
+  max-height: 99%;
+}

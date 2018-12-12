@@ -4,7 +4,7 @@ import { Validators } from '@angular/forms';
 // import { FormArray } from '@angular/forms';
 import { CustomerProfile, PrimaryContact, BillContact, PrimaryInstruction, Notifications } from './customer-profile.model';
 import { MessageService } from 'primeng/api';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CustomerProfileService } from './customer-profile.service';
 
 @Component({
@@ -20,6 +20,7 @@ export class CustomerProfileComponent implements OnInit {
   primaryInstructionForm: FormGroup;
   notificationListForm: FormGroup;
   BillingListForm: FormGroup;
+  ImageListForm: FormGroup;
   argCustomerProfile: CustomerProfile;
 
 
@@ -29,7 +30,7 @@ export class CustomerProfileComponent implements OnInit {
   selectedBillingContacts;
   selectedprimaryInstructions;
   selectednotificationLists;
-
+  selectedBillingLists;
 
 
 
@@ -41,17 +42,16 @@ export class CustomerProfileComponent implements OnInit {
   public isPrimryInstVisible: boolean;
   public isNotificationVisible: boolean;
   public isBillingVisible: boolean;
+  public isImageVisible: boolean;
+  public isLoading: boolean;
   indexval;
   constructor(private fb: FormBuilder, private http: HttpClient, private messageService: MessageService,
     private provider: CustomerProfileService) {
     // mobile : number; //when we select customertype as individual
     this.metaData = {};
-    const val = this.provider.getCurMetaData();
-    this.metaData = val ? val : {};
-
-    this.getMetaData();
-
+    this.metaData = this.provider.getCurMetaData();
     this.masterData = {};
+    this.isLoading = false;
 
     this.getMasterJSON();
     this.customerProfileForm = this.configCustomerProfileForm();
@@ -84,22 +84,22 @@ export class CustomerProfileComponent implements OnInit {
       { field: 'comments', header: 'COMMENTS' },
       { field: 'creditStatus', header: 'Credit Status' },
       { field: 'paymentType', header: 'Payment Type' },
-      { field: 'bankRecFlag', header: 'Bank Rec Flag' },
-      { field: 'defaultBilling', header: 'Default Billing' }
+      // { field: 'bankRecFlag', header: 'Bank Rec Flag' },
+      // { field: 'defaultBilling', header: 'Default Billing' }
     ];
 
-    // this.colsImage = [
-    //   { field: 'no', header: 'No' },
-    //   { field: 'source', header: 'Source' },
-    //   { field: 'docType', header: 'Doc Type' },
-    //   { field: 'status', header: 'Status' },
-    //   { field: 'annotation', header: 'Annotation' },
-    //   { field: 'created', header: 'Created' },
-    //   { field: 'contactValid', header: 'Contact valid' },
-    //   { field: 'customsValid', header: 'Customs Valid' },
-    //   { field: 'action', header: 'Action' },
-    //   { field: 'expiry', header: 'Expiry' }
-    // ];
+    this.colsImage = [
+      { field: 'no', header: 'No' },
+      { field: 'source', header: 'Source' },
+      { field: 'docType', header: 'Doc Type' },
+      { field: 'status', header: 'Status' },
+      { field: 'annotation', header: 'Annotation' },
+      { field: 'created', header: 'Created' },
+      { field: 'contactValid', header: 'Contact valid' },
+      { field: 'customsValid', header: 'Customs Valid' },
+      { field: 'action', header: 'Action' },
+      { field: 'expiry', header: 'Expiry' }
+    ];
 
     this.primaryAndBillingContactForm = this.fb.group({
       name: [''],
@@ -125,21 +125,24 @@ export class CustomerProfileComponent implements OnInit {
     });
 
     this.BillingListForm = this.fb.group({
-      fedexAcccount: [''], // textfield
-      // bsb : number;//textfield
+      fedexAccount: [''], // textfield
+
+      bsb: [''], // textfield
+
       paymentType: [''], // DDM
 
       bankAccount: [''], // textfield
 
       creditLimit: [''], // textfield
 
-      deferGST: [''], // checkbox
+      // deferGST: [''], // checkbox
 
-      nonRevenue: [''], // checkbox
+      // nonRevenue: [''], // checkbox
 
-      blankRecFlag: [''], // checkbox
+      // blankRecFlag: [''], // checkbox
 
-      defaultBilling: [''], // checkbox
+      // defaultBilling: [''], // checkbox
+
       // name & address
       name: [''], // textfield
 
@@ -158,6 +161,8 @@ export class CustomerProfileComponent implements OnInit {
       phone: [''], // textfield
 
       department: [''], // textfield
+
+      creditStatus: [''],
       // credit status (radio buttons)
 
       // 1.fedexBlackList //radionutton
@@ -168,6 +173,31 @@ export class CustomerProfileComponent implements OnInit {
 
       // comments
       comments: ['']
+
+    });
+
+    this.ImageListForm = this.fb.group({
+      no: [''],  // textfield
+
+      source: [''],  // textfield
+
+      docType: [''],  // textfield
+
+      status: [''], // textfield
+
+      annotation: [''],  // textfield
+
+      created: [''],  // textfield
+
+      contactValid: [''], // textfield
+
+      customsValid: [''],  // textfield
+
+      action: [''], // textfield
+
+      expiry: [''], // textfield
+
+      location: ['']
 
     });
 
@@ -203,59 +233,23 @@ export class CustomerProfileComponent implements OnInit {
       this.masterData = result;
     }, error => console.error(error));
   }
-  getMetaData() {
-    // const httpOptions = {
-    //   headers: new HttpHeaders({
-    //     'Access-Control-Allow-Origin': '*',
-    //   })
-    // };
-    // const url = 'https://accs-ui.app.wtcdev2.paas.fedex.com/accs/ui/metadata/1';
-    // const url = '/assets/utility/metadata.json';
-    // this.http.get(url).subscribe((result: any) => {
-    const result = this.provider.getCurMetaData();
-    if (result) {
-      const objmetadata = {};
-      for (const key in result.fieldsData) {
-        if (result.fieldsData.hasOwnProperty(key)) {
-          objmetadata[result.fieldsData[key]['fieldName'] + '_' + result.fieldsData[key]['fieldId']] = result.fieldsData[key];
-        }
-      }
-      this.metaData = objmetadata;
-      // this.getMasterJSON();
-
-    }
-    // this.masterData = result;
-    // }, error => console.error(error));
-  }
   requireFields(field) {
     if (this.metaData && this.metaData[field]) {
-      if (this.metaData[field]['isMandatory']) {
-        return [Validators.required];
-      } else {
-        return [];
-      }
+      return (this.metaData[field]['isMandatory']) ? [Validators.required] : [];
     } else {
       return [];
     }
   }
   disableFields(field) {
     if (this.metaData && this.metaData[field]) {
-      if (this.metaData[field]['isEnable']) {
-        return false;
-      } else {
-        return true;
-      }
+      return (this.metaData[field]['isEnable']) ? false : true;
     } else {
       return false;
     }
   }
   setDefaultFormValue(field) {
     if (this.metaData && this.metaData[field]) {
-      if (this.metaData[field]['defaultValue']) {
-        return this.metaData[field]['defaultValue'];
-      } else {
-        return '';
-      }
+      return (this.metaData[field]['defaultValue']) ? this.metaData[field]['defaultValue'] : '';
     } else {
       return '';
     }
@@ -344,27 +338,35 @@ export class CustomerProfileComponent implements OnInit {
 
   }
   createCustomerProfile() {
-    const arg = this.customerProfileForm.getRawValue();
-    // console.log(arg);
+    try {
+      const arg: CustomerProfile = this.customerProfileForm.getRawValue();
+      // console.log(arg);
+      const options = { headers: new HttpHeaders().set('Content-Type', 'application/json').set('Accept', 'application/json') };
+      const constobj = {
+        requestData: arg,
+        requestInfo: {
+          actionId: '',
+          stepId: 0
+        }
+      };
+      this.isLoading = true;
+      this.http.post('https://accs-cp.app.wtcdev2.paas.fedex.com/accs/cp/data', constobj, options).subscribe((result: any) => {
+        // this.masterData = result;
+        if (result && result.responseInfo) {
 
-    const constobj = {
-      requestData: arg,
-      requestInfo: {
-        actionId: '',
-        stepId: 0
-      }
-    };
+          if (result.responseInfo.httpCode === 200 || result.responseInfo.statusCode === 0) {
+            this.showSuccessMsg();
+          }
+        }
+        console.log(result);
+        this.isLoading = false;
+      }, error => { console.error(error); this.isLoading = false; });
+    } catch (err) {
 
-    this.http.post('https://accs-cp.app.wtcdev2.paas.fedex.com/accs/cp/data', constobj).subscribe(result => {
-      this.masterData = result;
-      if (result) {
-        // this.showSuccessMsg();
-      }
-      console.log(result);
-    }, error => console.error(error));
+    }
   }
   showSuccessMsg() {
-    this.messageService.add({ key: 'tc', severity: 'success', summary: 'Success Message', detail: 'Customer profile has created' });
+    this.messageService.add({ key: 'tc', severity: 'success', summary: 'Success', detail: 'Customer profile has created' });
   }
   resetCustomerProfile() {
     // this.showTopCenter();
@@ -392,8 +394,13 @@ export class CustomerProfileComponent implements OnInit {
         break;
 
       case 5: // Billing
-        this.notificationListForm.reset();
+        this.BillingListForm.reset();
         this.isBillingVisible = true;
+        break;
+
+      case 6: // Image
+        this.ImageListForm.reset();
+        this.isImageVisible = true;
         break;
 
     }
@@ -439,6 +446,10 @@ export class CustomerProfileComponent implements OnInit {
         this.isNotificationVisible = false;
         break;
       case 5: // Billing
+        const objBilling = this.copyFormControl(this.BillingListForm);
+        (this.customerProfileForm.get('billingList') as FormArray).push(objBilling);
+        this.BillingListForm.reset();
+        this.isBillingVisible = false;
         break;
     }
   }
@@ -481,6 +492,14 @@ export class CustomerProfileComponent implements OnInit {
           if (this.selectednotificationLists.hasOwnProperty(key)) {
             const idx = this.customerProfileForm.get('notificationList').value.indexOf(this.selectednotificationLists[key]);
             (this.customerProfileForm.get('notificationList') as FormArray).removeAt(idx);
+          }
+        }
+        break;
+      case 5: // Billing
+        for (const key in this.selectedBillingLists) {
+          if (this.selectedBillingLists.hasOwnProperty(key)) {
+            const idx = this.customerProfileForm.get('billingList').value.indexOf(this.selectedBillingLists[key]);
+            (this.customerProfileForm.get('billingList') as FormArray).removeAt(idx);
           }
         }
         break;

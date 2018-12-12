@@ -166,8 +166,10 @@ class Billing {
 class AddBilling {
     // account info
 
-    fedexAcccount: number; // textfield
-    // bsb : number;//textfield
+    fedexAccount: number; // textfield
+
+    bsb: number; // textfield
+
     paymentType: string; // DDM
 
     bankAccount: number; // textfield
@@ -199,6 +201,8 @@ class AddBilling {
     phone: number; // textfield
 
     department: string; // textfield
+
+    creditStatus: String;
     // credit status (radio buttons)
 
     // 1.fedexBlackList //radionutton
@@ -234,20 +238,22 @@ class Image {
 
     expiry: string; // textfield
 
+    location: string;
+
 }
 
 // upload image(popup)
 
-class ImageUpload {
+// class ImageUpload {
 
-    location: string; // DDM
+//     location: string; // DDM
 
-    documentType: string; // DDM
+//     documentType: string; // DDM
 
-    expiryDate: string; // calendar
+//     expiryDate: string; // calendar
 
-    // please specify a file : textfield
-}
+//     // please specify a file : textfield
+// }
 
 
 

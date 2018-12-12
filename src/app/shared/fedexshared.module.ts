@@ -18,6 +18,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { TabViewModule } from 'primeng/tabview';
 import { ToastModule } from 'primeng/toast';
+import { FieldsetModule } from 'primeng/fieldset';
 
 import { MatFormFieldModule, MatToolbarModule, MatInputModule, MatSelectModule, MatOptionModule } from '@angular/material';
 
@@ -42,6 +43,7 @@ import { MatFormFieldModule, MatToolbarModule, MatInputModule, MatSelectModule, 
     TabMenuModule,
     TabViewModule,
     ToastModule,
+    FieldsetModule,
     // Material module
     MatInputModule,
     MatFormFieldModule,
@@ -72,6 +74,7 @@ import { MatFormFieldModule, MatToolbarModule, MatInputModule, MatSelectModule, 
     TabMenuModule,
     TabViewModule,
     ToastModule,
+    FieldsetModule,
     // Material module
     MatInputModule,
     MatFormFieldModule,
